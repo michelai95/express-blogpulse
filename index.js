@@ -10,6 +10,7 @@ rowdy.begin(app)
 app.set('view engine', 'ejs')
 
 app.use(require('morgan')('dev'))
+// body parser
 app.use(express.urlencoded({ extended: false }))
 app.use(ejsLayouts)
 app.use(express.static(__dirname + '/public/'))
@@ -32,6 +33,16 @@ app.get('/', function(req, res) {
   })
 })
 
+app.get('/articles/:id', (req, res) => {
+  db.article.findOne({
+    include: [db.author, db.comment], 
+    where: {
+      id: req.params.id
+    }
+  }).then((article) => {
+    res.render('articles/show', { article: article, id: req.params.id })
+  })
+})
 // bring in authors and articles controllers
 app.use('/authors', require('./controllers/authors'))
 app.use('/articles', require('./controllers/articles'))

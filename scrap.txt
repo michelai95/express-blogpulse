@@ -1,0 +1,10 @@
+Comment 
+--- 
+commentator: string (NOT NULL),
+content: text,
+article: integer 
+
+sequelize model:create --name comment --attributes commentator:string,content:text,article:integer
+
+sequelize model:create --name tage --attributes content:string
+sequelize model:create --name articles_tags --attributes articleId:integer,tagId:integer
